@@ -93,4 +93,10 @@ Once you define getters and setters, Python automatically calls them:
 '''
 my_circle.radius # This will call the getter
 my_circle.radius = 4 # This will call the setter
-
+'''
+Summary:
+    -Getters let you retrieve a value or even compute a value on the fly.
+    -Setters let you modify the values safely by running checks before assignment.
+    -Properties are what tie these getters and setters together so you can write logic while still using dot notation.
+    -Deleters let you define what happens when an attribute is deleted.
+'''
