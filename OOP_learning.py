@@ -69,6 +69,28 @@ Object-oriented programming:
     -Properties act like attributes but behave like methods under the hood. 
       Think of them as data you define like methods, but work like attributes. This means you can access properties with dot notation instead of parentheses or round brackets.
     -Why properties instead of methods? Mostly because readability and convention, makes the code cleaner and easier to read.
-    
+    -To create a property, you define a method and place the @property decorator above it. This turns the method into a property, so it can be accessed like an attribute while internally calling the decorated method:
 '''
+   class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def radius(self): # A getter to get the radius
+        return self._radius
+        #_radius shows that the attribute is meant to be private.
+    @property
+    def area(self):  # A getter to calculate area
+        return 3.14 * (self._radius ** 2)
+
+  my_circle = Circle(3)
+  
+  print(my_circle.radius) # 3
+  print(my_circle.area) # 28.26   
+
+'''
+Once you define getters and setters, Python automatically calls them:
+'''
+my_circle.radius # This will call the getter
+my_circle.radius = 4 # This will call the setter
 
