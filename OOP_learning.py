@@ -62,3 +62,13 @@ Object-oriented programming:
     summary: Encapsulation locks down internal data behind clear public methods. That's how you keep your classes safe from tampering and centralize validation in one place.
             You can update or extend your code freely, knowing that outside code only touches the interfaces you expose.
 '''
+'''
+  -Getters and Setters:
+    -Getters retrieve a value, setters set a value.
+    -The actions which connect getters and setters are known as properties, as they allow them to access to data.
+    -Properties act like attributes but behave like methods under the hood. 
+      Think of them as data you define like methods, but work like attributes. This means you can access properties with dot notation instead of parentheses or round brackets.
+    -Why properties instead of methods? Mostly because readability and convention, makes the code cleaner and easier to read.
+    
+'''
+
