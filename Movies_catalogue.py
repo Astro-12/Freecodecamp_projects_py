@@ -1,3 +1,10 @@
+class MediaError(Exception):
+    """Custom exception for media-related errors."""
+    
+    def __init__(self, message, obj):
+        super().__init__(message)
+        self.obj = obj
+
 class Movie:
     """Parent class representing a movie."""
     
@@ -20,7 +27,7 @@ class Movie:
         return f'{self.title} ({self.year}) - {self.duration} min, {self.director}'
 
 class TVSeries(Movie):
-    
+    """Child class representing an entire TV series."""
     
     def __init__(self, title, year, director, duration, seasons, total_episodes):
         super().__init__(title, year, director, duration)
@@ -37,19 +44,39 @@ class TVSeries(Movie):
         return f'{self.title} ({self.year}) - {self.seasons} seasons, {self.total_episodes} episodes, {self.duration} min avg, {self.director}'
 
 class MediaCatalogue:
+    """A catalogue that can store different types of media items."""
+    
     def __init__(self):
         self.items = []
     
     def add(self, media_item):
+        if not isinstance(media_item, Movie):
+            raise MediaError('Only Movie or TVSeries instances can be added', media_item)
         self.items.append(media_item)
+    
+    def get_movies(self):
+        return [item for item in self.items if type(item) is Movie]
+    
+    def get_tv_series(self):
+        return [item for item in self.items if isinstance(item, TVSeries)]
     
     def __str__(self):
         if not self.items:
             return 'Media Catalogue (empty)'
         
+        movies = self.get_movies()
+        series = self.get_tv_series()
+        
         result = f'Media Catalogue ({len(self.items)} items):\n\n'
-        for i, movie in enumerate(self.items, 1):
-            result += f'{i}. {movie}\n'
+        if movies:
+            result += '=== MOVIES ===\n'
+            for i, movie in enumerate(movies, 1):
+                result += f'{i}. {movie}\n'
+        
+        if series:
+            result += '=== TV SERIES ===\n'
+            for i, show in enumerate(series, 1):
+                result += f'{i}. {show}\n'
         
         return result
 
@@ -69,6 +96,6 @@ try:
     print(catalogue)
 except ValueError as e:
     print(f'Validation Error: {e}')
-
-print(movie1.__doc__)
-print(series1.__doc__)
+except MediaError as e:
+    print(f'Media Error: {e}')
+    print(f'Unable to add {e.obj}: {type(e.obj)}')
